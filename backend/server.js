@@ -6,6 +6,7 @@ import rentalRoutes from "./src/routes/rentalRoutes.js";
 import productRoutes from "./src/routes/productRoutes.js";
 import userRoutes from "./src/routes/userRoute.js";
 import loginRoutes from "./src/routes/loginRoutes.js";
+import paymentRoutes from "./src/routes/paymentsRouts.js";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/rentals", rentalRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", loginRoutes);
+app.use("/api/payments", paymentRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

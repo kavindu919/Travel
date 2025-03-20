@@ -6,6 +6,8 @@ const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({}); // Track quantity for each product
 
+  const [IsOrderProcessed, setIsOrderProcessed] = useState([]);
+
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
@@ -20,6 +22,7 @@ const ProductPage = () => {
 
   const addToCart = async (productId) => {
     const quantity = quantities[productId] || 1; // Use the specific quantity for the product
+    const IsOrderProcessed = true;
     if (!userId) {
       alert("Please log in to add items to your cart.");
       return;
@@ -30,6 +33,7 @@ const ProductPage = () => {
         userId,
         productId,
         quantity,
+        IsOrderProcessed,
       });
       alert("Product added to cart!");
     } catch (error) {

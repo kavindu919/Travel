@@ -34,6 +34,7 @@ model CartItem {
   Cart      Cart?   @relation(fields: [cartId], references: [id])
   cartId    String? @db.ObjectId
   Product   Product @relation(fields: [productId], references: [id])
+  IsOrderProcessed Boolean? @default(false)
 }
 
 model Rental {
@@ -68,4 +69,16 @@ model User {
 
   cart   Cart[]
   rental Rental[]
+}
+
+model Payment {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  method     String   // "card" or "cash"
+  status     String   // "pending", "success", "failed"
+  cardName   String?
+  cardNumber String?
+  cardExpiry String?
+  cardCVV    String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

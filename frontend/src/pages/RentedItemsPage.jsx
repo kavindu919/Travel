@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom"; // Import useLocation
 
 const RentedItemsPage = () => {
   const [rentedItems, setRentedItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   // Get userId from URL query using useLocation
   const location = useLocation();
@@ -19,6 +21,8 @@ const RentedItemsPage = () => {
     let total = 0;
     rentedItems.forEach((item) => {
       item.products.forEach((product) => {
+        console.log("Product:", product);
+        console.log("total.price:", total);
         if (product.Product && product.Product.price) {
           total += product.Product.price * product.quantity; // Include quantity if needed
         } else {
@@ -74,6 +78,15 @@ const RentedItemsPage = () => {
     } catch (error) {
       console.error("Error deleting rental", error);
     }
+  };
+
+  const checkout = () => {
+    console.log("Checkout clicked");
+    if (!userId) {
+      alert("Please log in to rent items.");
+      return;
+    }
+    navigate(`/payment?userId=${userId}`);
   };
 
   return (
@@ -155,6 +168,13 @@ const RentedItemsPage = () => {
           Total Price: ${total.toFixed(2)}
         </h2>
       </div>
+
+      <button
+        onClick={checkout}
+        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        Check Out
+      </button>
     </div>
   );
 };

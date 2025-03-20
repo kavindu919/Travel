@@ -11,6 +11,7 @@ import CartPage from "./pages/CartPage";
 import RentalPage from "./pages/RentalPage";
 import RentItemForm from "./pages/RentItemForm";
 import RentedItemsPage from "./pages/RentedItemsPage";
+import PaymentPage from "./pages/paymentPage";
 
 const App = () => {
   return (
@@ -22,11 +23,12 @@ const App = () => {
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/userproducts" element={<ProductPage />} />
         <Route path="/addtocart" element={<AddToCartPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/usercart" element={<CartPage />} />
         <Route path="/userrental" element={<RentalPage />} />
         <Route path="/rentform" element={<RentItemForm />} />
         <Route path="/rentcheckout" element={<RentedItemsPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
       </Routes>
     </Router>
   );
