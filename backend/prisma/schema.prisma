@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  price       Float
+  stock       Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  cartItems   CartItem[]
+  rentalItems RentalItem[]
+}
+
+model Cart {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String     @db.ObjectId
+  products  CartItem[]
+  createdAt DateTime   @default(now())
+
+  User User @relation(fields: [userId], references: [id])
+}
+
+model CartItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  quantity  Int
+  Cart      Cart?   @relation(fields: [cartId], references: [id])
+  cartId    String? @db.ObjectId
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model Rental {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String       @db.ObjectId
+  products  RentalItem[]
+  startDate DateTime
+  endDate   DateTime
+  status    String       @default("pending")
+  createdAt DateTime     @default(now())
+
+  User User @relation(fields: [userId], references: [id])
+}
+
+model RentalItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId String  @db.ObjectId
+  quantity  Int
+  Rental    Rental? @relation(fields: [rentalId], references: [id])
+  rentalId  String? @db.ObjectId
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cart   Cart[]
+  rental Rental[]
+}
