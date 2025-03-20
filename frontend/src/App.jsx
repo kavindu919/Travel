@@ -11,7 +11,10 @@ import CartPage from "./pages/CartPage";
 import RentalPage from "./pages/RentalPage";
 import RentItemForm from "./pages/RentItemForm";
 import RentedItemsPage from "./pages/RentedItemsPage";
+import TravelPackages  from "./pages/TravelPackages ";
 import PaymentPage from "./pages/paymentPage";
+import CreateTravelPackage from "./pages/CreateTravelPackage";
+import TravelPackageDetails from "./pages/TravelPackageDetails";
 
 const App = () => {
   return (
@@ -28,7 +31,10 @@ const App = () => {
         <Route path="/userrental" element={<RentalPage />} />
         <Route path="/rentform" element={<RentItemForm />} />
         <Route path="/rentcheckout" element={<RentedItemsPage />} />
+        <Route path="/travelPackages" element={<TravelPackages />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/travelPackages/Create" eelement={<CreateTravelPackage />} />
+        <Route path="/travelPackages/:id" eelement={<TravelPackageDetails />} />
       </Routes>
     </Router>
   );

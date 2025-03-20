@@ -82,3 +82,25 @@ model Payment {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+model Travelpackage {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  destination String
+  price       Float
+  duration    Int
+  description String?
+  imageUrl    String?
+  Bookings    Booking[]
+}
+
+model Booking {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  packageId   String  @db.ObjectId
+  userId      String
+  travelDate  DateTime
+  status      String  @default("pending")
+  
+  travelPackage Travelpackage @relation(fields: [packageId], references: [id])
+}
+
