@@ -31,7 +31,7 @@ const TravelPackageDetails = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:3000/api/travel-packages/update/${id}`, packageData);
+      await axios.put(`http://localhost:3000/api/travel-packages//update/${id}`, packageData);
       alert("Package updated successfully!");
       setIsEditing(false);
     } catch (error) {
