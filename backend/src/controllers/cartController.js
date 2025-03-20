@@ -3,7 +3,7 @@ import prisma from "../lib/prismaClient.js";
 // Add item to cart
 export const addToCart = async (req, res) => {
   try {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId, quantity, IsOrderProcessed } = req.body;
     let cart = await prisma.cart.findFirst({
       where: { userId },
     });
@@ -18,6 +18,7 @@ export const addToCart = async (req, res) => {
       where: {
         cartId: cart.id,
         productId: productId,
+        IsOrderProcessed: IsOrderProcessed,
       },
     });
 
@@ -36,6 +37,7 @@ export const addToCart = async (req, res) => {
         cartId: cart.id,
         productId,
         quantity,
+        IsOrderProcessed,
       },
     });
 
@@ -54,6 +56,7 @@ export const getCartItems = async (req, res) => {
       where: { userId },
       include: {
         products: {
+          where: { IsOrderProcessed: true },
           include: {
             Product: true,
           },
@@ -61,6 +64,7 @@ export const getCartItems = async (req, res) => {
       },
     });
 
+    console.log(cart);
     if (!cart) {
       return res.status(404).json({ error: "Cart not found" });
     }
@@ -96,5 +100,39 @@ export const removeCartItem = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error removing item from cart" });
+  }
+};
+
+export const completeOrder = async (req, res) => {
+  try {
+    const { userId } = req.params; // Get user ID from request parameters
+
+    // Find the cart for the user
+    const cart = await prisma.cart.findFirst({
+      where: { userId },
+      include: {
+        products: true, // Include cart items
+      },
+    });
+
+    if (!cart || cart.products.length === 0) {
+      return res.status(404).json({ error: "No items in the cart to process" });
+    }
+
+    // Update all cart items to mark them as processed
+    await prisma.CartItem.updateMany({
+      where: {
+        cartId: cart.id,
+        IsOrderProcessed: true, // Only update unprocessed items
+      },
+      data: {
+        IsOrderProcessed: false, // Mark as processed
+      },
+    });
+
+    res.json({ message: "Order completed successfully" });
+  } catch (error) {
+    console.error("Error processing order:", error);
+    res.status(500).json({ error: "Error processing order" });
   }
 };

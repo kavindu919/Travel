@@ -12,6 +12,7 @@ import RentalPage from "./pages/RentalPage";
 import RentItemForm from "./pages/RentItemForm";
 import RentedItemsPage from "./pages/RentedItemsPage";
 import TravelPackages  from "./pages/TravelPackages ";
+import PaymentPage from "./pages/paymentPage";
 import CreateTravelPackage from "./pages/CreateTravelPackage";
 import TravelPackageDetails from "./pages/TravelPackageDetails";
 
@@ -25,12 +26,13 @@ const App = () => {
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/userproducts" element={<ProductPage />} />
         <Route path="/addtocart" element={<AddToCartPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/usercart" element={<CartPage />} />
         <Route path="/userrental" element={<RentalPage />} />
         <Route path="/rentform" element={<RentItemForm />} />
         <Route path="/rentcheckout" element={<RentedItemsPage />} />
         <Route path="/travelPackages" element={<TravelPackages />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/travelPackages/Create" eelement={<CreateTravelPackage />} />
         <Route path="/travelPackages/:id" eelement={<TravelPackageDetails />} />
       </Routes>

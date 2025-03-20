@@ -19,6 +19,8 @@ const CartPage = () => {
       );
       setCartItems(response.data);
       calculateTotal(response.data);
+
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching cart items", error);
     }
@@ -42,7 +44,8 @@ const CartPage = () => {
   };
 
   const handleCheckout = () => {
-    navigate("/checkout");
+    const cartItemIds = cartItems.map((item) => item.id);
+    navigate("/payment", { state: { cartItemIds } });
   };
 
   return (
