@@ -193,7 +193,7 @@ export const applyLateReturnPenalty = async (req, res) => {
 export const rentItemToUser = async (req, res) => {
   try {
     const { userId, productId, startDate, endDate, quantity } = req.body;
-
+    console.log(req.body);
     // Validate input data
     if (!userId || !productId || !startDate || !endDate || !quantity) {
       return res.status(400).json({ error: "All fields are required" });
@@ -239,7 +239,7 @@ export const rentItemToUser = async (req, res) => {
     // Respond with the rental details
     res.status(201).json(rental);
   } catch (error) {
-    console.error("Error renting item:", error);
+    console.error(error);
     res.status(500).json({ error: "Error renting the item" });
   }
 };

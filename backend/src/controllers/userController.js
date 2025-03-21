@@ -55,13 +55,22 @@ export const updateUser = async (req, res) => {
   }
 };
 
-// Delete a user by ID
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+
+    await prisma.cart.deleteMany({
+      where: { userId: id },
+    });
+
+    await prisma.rental.deleteMany({
+      where: { userId: id },
+    });
+
     await prisma.user.delete({
       where: { id },
     });
+
     res.json({ message: "User deleted successfully" });
   } catch (error) {
     console.error(error);

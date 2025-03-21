@@ -11,16 +11,18 @@ import CartPage from "./pages/CartPage";
 import RentalPage from "./pages/RentalPage";
 import RentItemForm from "./pages/RentItemForm";
 import RentedItemsPage from "./pages/RentedItemsPage";
-import TravelPackages  from "./pages/TravelPackages ";
+import TravelPackages from "./pages/TravelPackages ";
 import PaymentPage from "./pages/paymentPage";
 import CreateTravelPackage from "./pages/CreateTravelPackage";
 import TravelPackageDetails from "./pages/TravelPackageDetails";
+import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/users" element={<Users />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/products" element={<Products />} />
         <Route path="/carts" element={<Carts />} />
         <Route path="/rentals" element={<Rentals />} />
@@ -33,7 +35,10 @@ const App = () => {
         <Route path="/rentcheckout" element={<RentedItemsPage />} />
         <Route path="/travelPackages" element={<TravelPackages />} />
         <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/travelPackages/Create" element={<CreateTravelPackage />} />
+        <Route
+          path="/travelPackages/Create"
+          element={<CreateTravelPackage />}
+        />
         <Route path="/travelPackages/:id" element={<TravelPackageDetails />} />
       </Routes>
     </Router>

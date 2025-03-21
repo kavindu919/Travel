@@ -1,15 +1,31 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/users/users")
-      .then((response) => setUsers(response.data));
+    fetchUsers();
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/users/users");
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const deleteUser = async (id) => {
+    try {
+      await axios.post(`http://localhost:3000/api/users/delete/${id}`);
+      setUsers(users.filter((user) => user.id !== id));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg w-full h-screen mx-auto">
@@ -36,10 +52,10 @@ const UserTable = () => {
                 <td className="py-3 px-6">{user.name}</td>
                 <td className="py-3 px-6">{user.email}</td>
                 <td className="py-3 px-6 flex justify-center gap-3">
-                  <button className="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md shadow">
-                    <FiEdit className="text-lg" /> Edit
-                  </button>
-                  <button className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md shadow">
+                  <button
+                    onClick={() => deleteUser(user.id)}
+                    className="flex items-center gap-1 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md shadow"
+                  >
                     <FiTrash2 className="text-lg" /> Delete
                   </button>
                 </td>

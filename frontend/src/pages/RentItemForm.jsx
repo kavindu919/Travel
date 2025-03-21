@@ -36,7 +36,9 @@ const RentItemForm = () => {
       setSuccessMessage("Item rented successfully!");
       setError(null);
     } catch (err) {
-      setError("Error renting the item");
+      const errorMessage =
+        err.response?.data?.error || "Error renting the item";
+      setError(errorMessage);
       setSuccessMessage(null);
     }
   };

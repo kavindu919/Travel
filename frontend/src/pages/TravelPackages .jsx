@@ -75,7 +75,7 @@ const TravelPackages = () => {
               </p>
 
               <button
-                onClick={() => navigate(`/travelPackages/${pkg.id}`)}
+                // onClick={() => navigate(`/travelPackages/${pkg.id}`)}
                 className="mt-4 w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition"
               >
                 View Details

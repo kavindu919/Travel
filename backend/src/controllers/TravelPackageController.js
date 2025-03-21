@@ -2,27 +2,28 @@ import prisma from "../lib/prismaClient.js";
 
 export const createTravelPackage = async (req, res) => {
   try {
-      console.log("Prisma Client in Controller:", prisma);
-      console.log("TravelPackage Model:", prisma.travelpackage);
-      
-      const { name, destination, price, duration, description, imageUrl } = req.body;
-      const travelpackage = await prisma.travelpackage.create({
-          data: { name, destination, price, duration, description, imageUrl },
-      });
-      res.status(201).json(travelpackage);
+    const { name, destination, price, duration, description, imageUrl } =
+      req.body;
+    const travelpackage = await prisma.travelpackage.create({
+      data: {
+        name,
+        destination,
+        price: parseFloat(price),
+        duration: parseInt(duration),
+        description,
+        imageUrl,
+      },
+    });
+    res.status(201).json(travelpackage);
   } catch (error) {
-      console.error("Error in createTravelPackage:", error);
-      res.status(500).json({ error: "Error creating travel package" });
+    console.error("Error in createTravelPackage:", error);
+    res.status(500).json({ error: "Error creating travel package" });
   }
 };
-
 
 // Get all travel packages
 export const getAllTravelPackages = async (req, res) => {
   try {
-    console.log("Prisma Client in Controller:", prisma);
-    console.log("TravelPackage Model:", prisma.travelpackage);
-
     const travelpackage = await prisma.travelpackage.findMany();
     res.json(travelpackage);
   } catch (error) {
@@ -30,7 +31,6 @@ export const getAllTravelPackages = async (req, res) => {
     res.status(500).json({ error: "Error fetching travel packages" });
   }
 };
-
 
 // Get travel package by ID
 export const getTravelPackageById = async (req, res) => {
@@ -61,7 +61,8 @@ export const getTravelPackageById = async (req, res) => {
 export const updateTravelPackage = async (req, res) => {
   try {
     const { packageId } = req.params;
-    const { name, destination, price, duration, description, imageUrl } = req.body;
+    const { name, destination, price, duration, description, imageUrl } =
+      req.body;
     const updatedPackage = await prisma.travelpackage.update({
       where: { id: packageId },
       data: { name, destination, price, duration, description, imageUrl },
@@ -87,7 +88,9 @@ export const deleteTravelPackage = async (req, res) => {
       where: { id: packageId },
     });
 
-    res.json({ message: "Travel package and related bookings deleted successfully" });
+    res.json({
+      message: "Travel package and related bookings deleted successfully",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error deleting travel package" });
