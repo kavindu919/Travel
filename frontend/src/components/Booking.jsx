@@ -11,13 +11,13 @@ const BookingsTable = () => {
 
   const fetchBookings = async () => {
     const response = await axios.get(
-      "http://localhost:3000/api/booking/bookings"
+      "http://localhost:3000/api/booking/adminbookings"
     );
     setBookings(response.data);
   };
 
   const deleteBooking = async (id) => {
-    await axios.post(`http://localhost:3000/api/bookings/delete/${id}`);
+    await axios.post(`http://localhost:3000/api/booking/delete/${id}`);
     fetchBookings();
   };
 
@@ -33,7 +33,6 @@ const BookingsTable = () => {
               <th className="py-3 px-6 text-left">ID</th>
               <th className="py-3 px-6 text-left">User</th>
               <th className="py-3 px-6 text-left">Package</th>
-              <th className="py-3 px-6 text-left">Payment Status</th>
               <th className="py-3 px-6 text-left">Start Date</th>
               <th className="py-3 px-6 text-left">End Date</th>
               <th className="py-3 px-6 text-center">Actions</th>
@@ -46,9 +45,10 @@ const BookingsTable = () => {
                 className="border-b border-gray-200 hover:bg-gray-50 transition"
               >
                 <td className="py-3 px-6">{booking.id}</td>
-                <td className="py-3 px-6">{booking.user.name}</td>
-                <td className="py-3 px-6">{booking.travelPackage.name}</td>
-                <td className="py-3 px-6">{booking.payment.status}</td>
+                <td className="py-3 px-6">{booking.user?.name || "N/A"}</td>
+                <td className="py-3 px-6">
+                  {booking.travelPackage?.name || "N/A"}
+                </td>
                 <td className="py-3 px-6">
                   {new Date(booking.startDate).toLocaleDateString()}
                 </td>
