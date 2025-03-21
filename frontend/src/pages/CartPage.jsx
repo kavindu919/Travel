@@ -133,7 +133,7 @@ const CartPage = () => {
 
             <div className="mt-6 flex justify-between gap-4">
               <button
-                onClick={() => navigate("/products")}
+                onClick={() => navigate("/userproducts")}
                 className="bg-gray-600 text-white py-2 px-6 rounded-lg hover:bg-gray-700 transition duration-200"
               >
                 Continue Shopping
