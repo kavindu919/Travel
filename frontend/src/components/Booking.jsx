@@ -11,7 +11,7 @@ const BookingsTable = () => {
 
   const fetchBookings = async () => {
     const response = await axios.get(
-      "http://localhost:3000/api/bookings/getallbookings"
+      "http://localhost:3000/api/booking/bookings"
     );
     setBookings(response.data);
   };
