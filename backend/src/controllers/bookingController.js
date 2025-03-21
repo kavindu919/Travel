@@ -2,8 +2,7 @@ import prisma from "../lib/prismaClient.js";
 
 // Create a booking
 export const createBooking = async (req, res) => {
-  const { userId, packageId, travelDate, numTravelers, specialRequest } =
-    req.body;
+  const { userId, packageId, travelDate, status } = req.body;
 
   try {
     // Ensure the travel package exists
@@ -21,8 +20,7 @@ export const createBooking = async (req, res) => {
         userId,
         packageId,
         travelDate,
-        numTravelers,
-        specialRequest,
+        status,
       },
     });
 
@@ -69,7 +67,6 @@ export const getAllBookings = async (req, res) => {
       include: {
         travelPackage: true,
         user: true,
-        payment: true,
       },
     });
 
@@ -82,7 +79,29 @@ export const getAllBookings = async (req, res) => {
   }
 };
 
-// Cancel a booking
-export const cancelBooking = async (req, res) => {
-  const { id } = req.params;
+export const deleteBooking = async (req, res) => {
+  const { bookingId } = req.params;
+
+  try {
+    // Check if the booking exists
+    const booking = await prisma.booking.findUnique({
+      where: { id: bookingId },
+    });
+
+    if (!booking) {
+      return res.status(404).json({ error: "Booking not found." });
+    }
+
+    // Delete the booking
+    await prisma.booking.delete({
+      where: { id: bookingId },
+    });
+
+    return res.status(200).json({ message: "Booking deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting booking:", error);
+    return res
+      .status(500)
+      .json({ error: "Something went wrong. Please try again." });
+  }
 };

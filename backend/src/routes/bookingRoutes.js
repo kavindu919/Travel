@@ -1,7 +1,7 @@
 import express from "express";
 import {
-  cancelBooking,
   createBooking,
+  deleteBooking,
   getAllBookings,
   getUserBookings,
 } from "../controllers/bookingController.js";
@@ -9,8 +9,7 @@ const router = express.Router();
 
 router.post("/bookings", createBooking);
 router.get("/bookings/user/:userId", getUserBookings);
-router.get("/bookings", getAllBookings);
-router.post("/bookings/:id/cancel", cancelBooking);
-// router.post("/bookings/:id/status", updateBookingStatus);
+router.get("/adminbookings", getAllBookings);
+router.post("/delete/:bookingId", deleteBooking);
 
 export default router;
