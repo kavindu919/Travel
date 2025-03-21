@@ -10,13 +10,23 @@ const CartTable = () => {
   }, []);
 
   const fetchCarts = async () => {
-    const response = await axios.get("http://localhost:3000/api/cart");
-    setCarts(response.data);
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/cart/getallitems"
+      );
+      setCarts(response.data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
   };
 
   const deleteCartItem = async (id) => {
-    await axios.delete(`/api/cart/${id}`);
-    fetchCarts();
+    try {
+      await axios.post(`http://localhost:3000/api/cart/deleteitems/${id}`);
+      fetchCarts();
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
+    }
   };
 
   return (

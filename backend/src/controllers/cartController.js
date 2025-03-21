@@ -123,10 +123,10 @@ export const completeOrder = async (req, res) => {
     await prisma.CartItem.updateMany({
       where: {
         cartId: cart.id,
-        IsOrderProcessed: true, // Only update unprocessed items
+        IsOrderProcessed: true,
       },
       data: {
-        IsOrderProcessed: false, // Mark as processed
+        IsOrderProcessed: false,
       },
     });
 
@@ -134,5 +134,56 @@ export const completeOrder = async (req, res) => {
   } catch (error) {
     console.error("Error processing order:", error);
     res.status(500).json({ error: "Error processing order" });
+  }
+};
+
+export const getAllCartItems = async (req, res) => {
+  try {
+    const cartItems = await prisma.cartItem.findMany({
+      include: {
+        Product: true,
+        Cart: {
+          include: {
+            User: true,
+          },
+        },
+      },
+    });
+
+    const formattedCartItems = cartItems.map((item) => ({
+      id: item.id,
+      userId: item.Cart ? item.Cart.userId : null,
+      productId: item.productId,
+      quantity: item.quantity,
+      productName: item.Product.name,
+    }));
+
+    res.json(formattedCartItems);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error fetching cart items" });
+  }
+};
+
+export const deleteCartItem = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const cartItem = await prisma.cartItem.findUnique({
+      where: { id },
+    });
+
+    if (!cartItem) {
+      return res.status(404).json({ error: "Cart item not found" });
+    }
+
+    await prisma.cartItem.delete({
+      where: { id },
+    });
+
+    res.json({ message: "Cart item deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error deleting cart item" });
   }
 };
