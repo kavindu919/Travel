@@ -3,9 +3,9 @@ import prisma from "../lib/prismaClient.js";
 // Create Product
 export const createProduct = async (req, res) => {
   try {
-    const { name, price, stock } = req.body;
+    const { name, price, stock, image } = req.body;
     const product = await prisma.product.create({
-      data: { name, price, stock },
+      data: { name, price: parseInt(price), stock: parseInt(stock), image },
     });
     res.status(201).json(product);
   } catch (error) {
