@@ -20,11 +20,14 @@ const BookingPage = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:3000/api/booking/bookings", {
-        userId,
-        packageId,
-        travelDate,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/booking/bookings",
+        {
+          userId,
+          packageId,
+          travelDate,
+        }
+      );
 
       alert("Booking successful!");
       navigate("/my-bookings");

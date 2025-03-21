@@ -37,11 +37,12 @@ const TravelPackageDetails = () => {
 
   if (loading) return <p className="text-center text-gray-600">Loading...</p>;
   if (!travelPackage)
-    return <p className="text-center text-red-500">Travel package not found.</p>;
+    return (
+      <p className="text-center text-red-500">Travel package not found.</p>
+    );
 
   const handleBookNow = () => {
-      navigate(`/bookings/${id}`, {
-      });
+    navigate(`/bookings/${id}`, {});
   };
 
   return (
@@ -66,10 +67,12 @@ const TravelPackageDetails = () => {
           {travelPackage.destination}
         </p>
         <p className="text-lg text-gray-800">
-          <span className="font-semibold text-xl">Price:</span> ${travelPackage.price}
+          <span className="font-semibold text-xl">Price:</span> $
+          {travelPackage.price}
         </p>
         <p className="text-lg text-gray-800">
-          <span className="font-semibold text-xl">Duration:</span> {travelPackage.duration} days
+          <span className="font-semibold text-xl">Duration:</span>{" "}
+          {travelPackage.duration} days
         </p>
       </div>
 

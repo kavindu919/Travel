@@ -45,7 +45,9 @@ const BookingsTable = () => {
                 className="border-b border-gray-200 hover:bg-gray-50 transition"
               >
                 <td className="py-3 px-6">{booking.id}</td>
-                <td className="py-3 px-6">{booking.user?.name || "N/A"}</td>
+                <td className="py-3 px-6">
+                  {booking.user?.firstName} {booking.user?.lastName}
+                </td>
                 <td className="py-3 px-6">
                   {booking.travelPackage?.name || "N/A"}
                 </td>
