@@ -5,12 +5,18 @@ import { FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
+  const userId = localStorage.getItem("userId");
 
   // Logout function
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // Remove authentication token (if used)
     setDropdownOpen(false); // Close dropdown
     navigate("/"); // Redirect to login page
+  };
+
+  const goToProfile = () => {
+    setDropdownOpen(false); // Close dropdown
+    navigate(`/profile?userId=${userId}`); // Redirect to login page
   };
 
   return (
@@ -37,13 +43,12 @@ const Navbar = () => {
         {/* Dropdown Menu */}
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 w-40 bg-white text-black shadow-md rounded-md z-50">
-            <Link
-              to="/profile"
-              className="block px-4 py-2 hover:bg-gray-200"
-              onClick={() => setDropdownOpen(false)}
+            <button
+              onClick={goToProfile}
+              className="block w-full text-left px-4 py-2 hover:bg-gray-200 hover:text-white"
             >
               Profile
-            </Link>
+            </button>
             {/* Logout Button */}
             <button
               onClick={handleLogout}

@@ -23,6 +23,7 @@ import TravelPackageDetails from "./pages/TravelPackageDetails";
 import RegisterPage from "./pages/RegisterPage";
 import TravelPackageView from "./pages/TravelPackageView";
 import Navbar from "./components/Navbar";
+import ProfilePage from "./pages/ProfilePage";
 
 // This component will conditionally render the Navbar
 const AppContent = () => {
@@ -45,6 +46,7 @@ const AppContent = () => {
         !isUserPage && <Navbar />}
       <Routes>
         <Route path="/users" element={<Users />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/products" element={<Products />} />
         <Route path="/carts" element={<Carts />} />
