@@ -4,7 +4,7 @@ export const createTravelPackage = async (req, res) => {
   try {
     const { name, destination, price, duration, description, imageUrl } =
       req.body;
-    const travelpackage = await prisma.travelPackage.create({
+    const travelpackage = await prisma.travelpackage.create({
       data: {
         name,
         destination,
@@ -24,7 +24,7 @@ export const createTravelPackage = async (req, res) => {
 // Get all travel packages
 export const getAllTravelPackages = async (req, res) => {
   try {
-    const travelpackage = await prisma.travelPackage.findMany();
+    const travelpackage = await prisma.travelpackage.findMany();
     res.json(travelpackage);
   } catch (error) {
     console.error("Error fetching travel packages:", error);
@@ -42,7 +42,7 @@ export const getTravelPackageById = async (req, res) => {
       return res.status(400).json({ error: "Package ID is required" });
     }
 
-    const travelPackage = await prisma.travelPackage.findUnique({
+    const travelPackage = await prisma.travelpackage.findUnique({
       where: { id: packageId },
     });
 
@@ -63,7 +63,7 @@ export const updateTravelPackage = async (req, res) => {
     const { packageId } = req.params;
     const { name, destination, price, duration, description, imageUrl } =
       req.body;
-    const updatedPackage = await prisma.travelPackage.update({
+    const updatedPackage = await prisma.travelpackage.update({
       where: { id: packageId },
       data: { name, destination, price, duration, description, imageUrl },
     });
@@ -84,7 +84,7 @@ export const deleteTravelPackage = async (req, res) => {
     });
 
     // Then, delete the package
-    await prisma.travelPackage.delete({
+    await prisma.travelpackage.delete({
       where: { id: packageId },
     });
 
