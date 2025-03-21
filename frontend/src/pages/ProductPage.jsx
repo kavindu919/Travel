@@ -83,12 +83,12 @@ const ProductPage = () => {
     <div className="bg-gray-50 min-h-screen py-10 px-5 relative">
       {/* Add to Cart Button (Positioned at the top right) */}
       <div className="absolute top-5 right-5 z-10">
-        <button
+        {/* <button
           onClick={() => gototravelpakages()}
           className="bg-blue-600 text-white px-6 py-3 mr-4 rounded-md hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           Travel Packages
-        </button>
+        </button> */}
         <button
           onClick={getCartItems}
           className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"

@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Users from "./pages/Users";
 import Products from "./pages/Products";
 import Carts from "./pages/Carts";
@@ -16,12 +21,28 @@ import PaymentPage from "./pages/paymentPage";
 import CreateTravelPackage from "./pages/CreateTravelPackage";
 import TravelPackageDetails from "./pages/TravelPackageDetails";
 import RegisterPage from "./pages/RegisterPage";
-import TravelPackageView from "./pages/TravelPackageView"
+import TravelPackageView from "./pages/TravelPackageView";
+import Navbar from "./components/Navbar";
 
+// This component will conditionally render the Navbar
+const AppContent = () => {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/";
+  const isRegisterPage = location.pathname === "/register";
+  const isUserPage = location.pathname === "/users";
+  const isCartsPage = location.pathname === "/carts";
+  const isRentalPage = location.pathname === "/rentals";
+  const isProductPage = location.pathname === "/products";
 
-const App = () => {
   return (
-    <Router>
+    <>
+      {/* Only render Navbar if not on login page */}
+      {!isLoginPage &&
+        !isCartsPage &&
+        !isRentalPage &&
+        !isProductPage &&
+        !isRegisterPage &&
+        !isUserPage && <Navbar />}
       <Routes>
         <Route path="/users" element={<Users />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -44,6 +65,14 @@ const App = () => {
         <Route path="/travelPackages/:id" element={<TravelPackageDetails />} />
         <Route path="/travelPackagesview/:id" element={<TravelPackageView />} />
       </Routes>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 };
