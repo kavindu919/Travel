@@ -29,13 +29,14 @@ model Cart {
 }
 
 model CartItem {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  productId        String   @db.ObjectId
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  productId        String  @db.ObjectId
+  cartId           String  @db.ObjectId
   quantity         Int
-  Cart             Cart?    @relation(fields: [cartId], references: [id])
-  cartId           String?  @db.ObjectId
-  Product          Product  @relation(fields: [productId], references: [id])
-  IsOrderProcessed Boolean? @default(false)
+  isOrderProcessed Boolean @default(false)
+
+  Cart    Cart?   @relation(fields: [cartId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
 }
 
 model Rental {
@@ -51,12 +52,13 @@ model Rental {
 }
 
 model RentalItem {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  productId String  @db.ObjectId
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  productId String @db.ObjectId
+  rentalId  String @db.ObjectId
   quantity  Int
-  Rental    Rental? @relation(fields: [rentalId], references: [id])
-  rentalId  String? @db.ObjectId
-  Product   Product @relation(fields: [productId], references: [id])
+
+  Rental  Rental? @relation(fields: [rentalId], references: [id])
+  Product Product @relation(fields: [productId], references: [id])
 }
 
 model User {
@@ -68,52 +70,48 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  cart   Cart[]
-  rental Rental[]
+  cart     Cart[]
+  rentals  Rental[]
+  bookings Booking[]
 }
 
 model Payment {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   method     String // "card" or "cash"
   status     String // "pending", "success", "failed"
   cardName   String?
   cardNumber String?
   cardExpiry String?
   cardCVV    String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Booking    Booking[]
 }
 
-model Travelpackage {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+model TravelPackage {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   destination String
   price       Float
   duration    Int
   description String?
   imageUrl    String?
-  Bookings    Booking[]
+
+  bookings Booking[]
 }
 
 model Booking {
-<<<<<<< HEAD
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  packageId     String   @db.ObjectId
-  userId        String
-  travelDate    DateTime
-  bookingDate   DateTime @default(now())
-  status        String   @default("pending")
-  numTravelers  Int?
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  packageId      String   @db.ObjectId
+  userId         String   @db.ObjectId
+  paymentId      String?  @db.ObjectId
+  travelDate     DateTime
+  bookingDate    DateTime @default(now())
+  status         String   @default("pending")
+  numTravelers   Int?
   specialRequest String?
-  
-=======
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  packageId  String   @db.ObjectId
-  userId     String
-  travelDate DateTime
-  status     String   @default("pending")
 
->>>>>>> 04c54e9a0a68b1e890aa6552728e287aff717ca3
-  travelPackage Travelpackage @relation(fields: [packageId], references: [id])
-  user          User        @relation(fields: [userId], references: [id])
+  travelPackage TravelPackage @relation(fields: [packageId], references: [id])
+  user          User          @relation(fields: [userId], references: [id])
+  payment       Payment?      @relation(fields: [paymentId], references: [id])
 }
