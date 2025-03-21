@@ -44,11 +44,11 @@ export const getUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email } = req.body;
 
     const user = await prisma.user.update({
       where: { id },
-      data: { firstName, lastName, email, password },
+      data: { firstName, lastName, email },
     });
     res.json(user);
   } catch (error) {
