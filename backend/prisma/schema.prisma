@@ -95,12 +95,15 @@ model Travelpackage {
 }
 
 model Booking {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  packageId   String  @db.ObjectId
-  userId      String
-  travelDate  DateTime
-  status      String  @default("pending")
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  packageId     String   @db.ObjectId
+  userId        String
+  travelDate    DateTime
+  bookingDate   DateTime @default(now())
+  status        String   @default("pending")
+  numTravelers  Int?
+  specialRequest String?
   
   travelPackage Travelpackage @relation(fields: [packageId], references: [id])
+  user          User        @relation(fields: [userId], references: [id])
 }
-

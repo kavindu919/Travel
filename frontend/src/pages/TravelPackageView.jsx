@@ -7,8 +7,10 @@ const TravelPackageDetails = () => {
   const navigate = useNavigate();
   const [travelPackage, setTravelPackage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null); // Assuming you will get the user details here
 
   useEffect(() => {
+    // Fetch travel package details
     const fetchPackageDetails = async () => {
       try {
         const response = await axios.get(
@@ -22,12 +24,34 @@ const TravelPackageDetails = () => {
       }
     };
 
+    // Fetch user details (could be from API or context)
+    const fetchUserDetails = async () => {
+      // Example for fetching user details (replace this with your logic)
+      const userData = await axios.get("http://localhost:3000/api/user/me"); // or use context
+      setUser(userData.data);
+    };
+
     fetchPackageDetails();
+    fetchUserDetails();
   }, [id]);
 
   if (loading) return <p className="text-center text-gray-600">Loading...</p>;
   if (!travelPackage)
     return <p className="text-center text-red-500">Travel package not found.</p>;
+
+  const handleBookNow = () => {
+    if (user) {
+      // Navigate to the booking page, passing travelPackage and user data
+      navigate("/booking", {
+        state: {
+          travelPackage,
+          user, // Assuming user object is available
+        },
+      });
+    } else {
+      alert("Please login to make a booking.");
+    }
+  };
 
   return (
     <div className="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg mt-10">
@@ -44,7 +68,7 @@ const TravelPackageDetails = () => {
       <p className="text-lg text-gray-700 mb-8 text-center">
         {travelPackage.description}
       </p>
-      
+
       <div className="space-y-6 mb-8">
         <p className="text-lg text-gray-800">
           <span className="font-semibold text-xl">Destination:</span>{" "}
@@ -61,7 +85,7 @@ const TravelPackageDetails = () => {
       {/* Book Now Button */}
       <div className="flex justify-center">
         <button
-          onClick={() => navigate("/payment", { state: { packageId: id } })}
+          onClick={handleBookNow}
           className="w-full md:w-2/3 lg:w-1/2 bg-green-600 text-white py-4 rounded-lg hover:bg-green-700 transition duration-300 text-lg font-semibold"
         >
           Book Now
