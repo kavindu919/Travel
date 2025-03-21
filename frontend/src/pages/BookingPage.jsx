@@ -3,9 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const BookingPage = () => {
-  const { packageId } = useParams(); // Get packageId from URL params
+  const { id } = useParams();
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId"); // Get userId from localStorage
+  const userId = localStorage.getItem("userId");
   const [travelDate, setTravelDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -24,17 +24,18 @@ const BookingPage = () => {
         "http://localhost:3000/api/booking/bookings",
         {
           userId,
-          packageId,
-          travelDate,
+          packageId: id,
+          travelDate: new Date(travelDate).toISOString(),
         }
       );
 
       alert("Booking successful!");
-      navigate("/my-bookings");
+      // navigate("/my-bookings");
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong.");
     } finally {
       setLoading(false);
+      navigate("/travelPackages");
     }
   };
 
