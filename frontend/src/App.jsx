@@ -14,7 +14,7 @@ import RentedItemsPage from "./pages/RentedItemsPage";
 import TravelPackages from "./pages/TravelPackages ";
 import PaymentPage from "./pages/paymentPage";
 import CreateTravelPackage from "./pages/CreateTravelPackage";
-import TravelPackageDetails from "./pages/TravelPackageDetails";TravelPackageView
+import TravelPackageDetails from "./pages/TravelPackageDetails";
 import RegisterPage from "./pages/RegisterPage";
 import TravelPackageView from "./pages/TravelPackageView"
 
