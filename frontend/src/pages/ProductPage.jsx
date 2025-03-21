@@ -110,10 +110,11 @@ const ProductPage = () => {
             className="bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105"
           >
             <img
-              src={`https://picsum.photos/300/200?random=${product.id}`}
+              src={product.image}
               alt={product.name}
               className="w-full h-64 object-cover"
             />
+
             <div className="p-6">
               <h2 className="text-xl font-semibold text-gray-800">
                 {product.name}
