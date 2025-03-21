@@ -14,8 +14,10 @@ import RentedItemsPage from "./pages/RentedItemsPage";
 import TravelPackages from "./pages/TravelPackages ";
 import PaymentPage from "./pages/paymentPage";
 import CreateTravelPackage from "./pages/CreateTravelPackage";
-import TravelPackageDetails from "./pages/TravelPackageDetails";
+import TravelPackageDetails from "./pages/TravelPackageDetails";TravelPackageView
 import RegisterPage from "./pages/RegisterPage";
+import TravelPackageView from "./pages/TravelPackageView"
+
 
 const App = () => {
   return (
@@ -40,6 +42,7 @@ const App = () => {
           element={<CreateTravelPackage />}
         />
         <Route path="/travelPackages/:id" element={<TravelPackageDetails />} />
+        <Route path="/travelPackagesview/:id" element={<TravelPackageView />} />
       </Routes>
     </Router>
   );
