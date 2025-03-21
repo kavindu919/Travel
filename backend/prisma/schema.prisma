@@ -12,6 +12,7 @@ model Product {
   name        String
   price       Float
   stock       Int
+  image       String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   cartItems   CartItem[]
@@ -28,12 +29,12 @@ model Cart {
 }
 
 model CartItem {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  productId String  @db.ObjectId
-  quantity  Int
-  Cart      Cart?   @relation(fields: [cartId], references: [id])
-  cartId    String? @db.ObjectId
-  Product   Product @relation(fields: [productId], references: [id])
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId        String   @db.ObjectId
+  quantity         Int
+  Cart             Cart?    @relation(fields: [cartId], references: [id])
+  cartId           String?  @db.ObjectId
+  Product          Product  @relation(fields: [productId], references: [id])
   IsOrderProcessed Boolean? @default(false)
 }
 
@@ -73,8 +74,8 @@ model User {
 
 model Payment {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  method     String   // "card" or "cash"
-  status     String   // "pending", "success", "failed"
+  method     String // "card" or "cash"
+  status     String // "pending", "success", "failed"
   cardName   String?
   cardNumber String?
   cardExpiry String?
@@ -84,7 +85,7 @@ model Payment {
 }
 
 model Travelpackage {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   destination String
   price       Float
@@ -95,12 +96,11 @@ model Travelpackage {
 }
 
 model Booking {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  packageId   String  @db.ObjectId
-  userId      String
-  travelDate  DateTime
-  status      String  @default("pending")
-  
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  packageId  String   @db.ObjectId
+  userId     String
+  travelDate DateTime
+  status     String   @default("pending")
+
   travelPackage Travelpackage @relation(fields: [packageId], references: [id])
 }
-
