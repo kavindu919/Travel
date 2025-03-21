@@ -86,7 +86,7 @@ const CartPage = () => {
                     <td className="px-6 py-4 text-sm text-gray-800">
                       <div className="flex items-center space-x-4">
                         <img
-                          src={`https://picsum.photos/100/100?random=${item.Product.id}`}
+                          src={`${item.Product.image}`}
                           alt={item.Product.name}
                           className="w-20 h-20 object-cover rounded"
                         />
