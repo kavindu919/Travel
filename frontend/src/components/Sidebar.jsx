@@ -11,27 +11,27 @@ const Sidebar = () => {
         {/* <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
           <Link to="/dashboard" className="block">Dashboard</Link>
         </li> */}
-        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200 text-center">
           <Link to="/users" className="block">
             Manage Users
           </Link>
         </li>
-        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200 text-center">
           <Link to="/products" className="block">
             Manage Products
           </Link>
         </li>
-        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200 text-center">
           <Link to="/rentals" className="block">
             Manage Rentals
           </Link>
         </li>
-        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+        {/* <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200 text-center">
           <Link to="/carts" className="block">
             Manage Carts
           </Link>
-        </li>
-        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+        </li> */}
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200 text-center">
           <Link to="/adminbooking" className="block">
             Manage Bookings
           </Link>

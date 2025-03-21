@@ -16,23 +16,6 @@ const RentedItemsPage = () => {
     setUserId(id);
   }, [location]);
 
-  // Function to calculate the total price
-  const calculateTotal = () => {
-    let total = 0;
-    rentedItems.forEach((item) => {
-      item.products.forEach((product) => {
-        console.log("Product:", product);
-        console.log("total.price:", total);
-        if (product.Product && product.Product.price) {
-          total += product.Product.price * product.quantity; // Include quantity if needed
-        } else {
-          console.warn("Product price or Product is missing", product);
-        }
-      });
-    });
-    setTotal(total);
-  };
-
   // Fetch rented items from API
   useEffect(() => {
     if (userId) {
@@ -43,7 +26,45 @@ const RentedItemsPage = () => {
           );
           const data = await response.json();
           setRentedItems(data); // Set rented items data
-          calculateTotal(); // Calculate total price after setting the rented items
+          console.log("Rented Items:", data);
+        } catch (error) {
+          console.error("Error fetching rented items", error);
+        }
+      };
+      fetchRentedItems();
+    }
+  }, [userId]);
+
+  // Function to calculate the total price
+  useEffect(() => {
+    if (rentedItems.length > 0) {
+      let total = 0;
+      rentedItems.forEach((item) => {
+        item.products.forEach((product) => {
+          if (product.Product && product.Product.price) {
+            total += product.Product.price * product.quantity; // Include quantity
+          } else {
+            console.warn("Product price or Product is missing", product);
+          }
+        });
+      });
+      setTotal(total);
+      console.log("Total Price:", total);
+    }
+  }, [rentedItems]);
+
+  // Fetch rented items from API
+  useEffect(() => {
+    if (userId) {
+      const fetchRentedItems = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/rentals/user/${userId}`
+          );
+          const data = await response.json();
+          setRentedItems(data);
+          console.log("Rented Items:", data);
+          //calculateTotal();
         } catch (error) {
           console.error("Error fetching rented items", error);
         }
@@ -55,13 +76,12 @@ const RentedItemsPage = () => {
   // Delete rental
   const handleDeleteRental = async (rentalId) => {
     try {
-      // Send delete request to the API using POST method with rentalId as URL parameter
       const response = await fetch(
         `http://localhost:3000/api/rentals/delete/${rentalId}`,
         {
-          method: "POST", // Use POST method instead of DELETE
+          method: "POST",
           headers: {
-            "Content-Type": "application/json", // Set content type for body data
+            "Content-Type": "application/json",
           },
         }
       );

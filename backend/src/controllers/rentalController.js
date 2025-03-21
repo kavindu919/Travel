@@ -48,16 +48,17 @@ export const checkoutRental = async (req, res) => {
 
 // Get all rentals (Admin)
 export const getAllRentals = async (req, res) => {
+  console.log("Fetching all rentals...");
   try {
     const rentals = await prisma.rental.findMany({
-      include: {
-        User: true,
-        products: {
-          include: {
-            Product: true,
-          },
-        },
-      },
+      // include: {
+      //   User: true,
+      //   products: {
+      //     include: {
+      //       Product: true,
+      //     },
+      //   },
+      // },
     });
     res.status(200).json(rentals);
   } catch (error) {
