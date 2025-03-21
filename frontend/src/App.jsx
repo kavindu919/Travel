@@ -24,6 +24,7 @@ import RegisterPage from "./pages/RegisterPage";
 import TravelPackageView from "./pages/TravelPackageView";
 import Navbar from "./components/Navbar";
 import ProfilePage from "./pages/ProfilePage";
+import AdminBookingPage from "./pages/AdminBookingPage";
 
 // This component will conditionally render the Navbar
 const AppContent = () => {
@@ -34,6 +35,7 @@ const AppContent = () => {
   const isCartsPage = location.pathname === "/carts";
   const isRentalPage = location.pathname === "/rentals";
   const isProductPage = location.pathname === "/products";
+  const isAdminBookingPage = location.pathname === "/adminbooking";
 
   return (
     <>
@@ -43,6 +45,7 @@ const AppContent = () => {
         !isRentalPage &&
         !isProductPage &&
         !isRegisterPage &&
+        !isAdminBookingPage &&
         !isUserPage && <Navbar />}
       <Routes>
         <Route path="/users" element={<Users />} />
@@ -60,6 +63,7 @@ const AppContent = () => {
         <Route path="/rentcheckout" element={<RentedItemsPage />} />
         <Route path="/travelPackages" element={<TravelPackages />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/adminbooking" element={<AdminBookingPage />} />
         <Route
           path="/travelPackages/Create"
           element={<CreateTravelPackage />}

@@ -31,6 +31,11 @@ const Sidebar = () => {
             Manage Carts
           </Link>
         </li>
+        <li className="hover:bg-gray-700 p-3 rounded-md transition-all duration-200">
+          <Link to="/adminbooking" className="block">
+            Manage Bookings
+          </Link>
+        </li>
       </ul>
     </div>
   );
