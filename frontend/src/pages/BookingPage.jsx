@@ -1,114 +1,58 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const BookingPage = () => {
-  const location = useLocation();
+  const { packageId } = useParams(); // Get packageId from URL params
   const navigate = useNavigate();
-  const { travelPackage, user } = location.state || {};
-  const [formData, setFormData] = useState({
-    travelDate: "",
-    numTravelers: 1,
-    specialRequest: "",
-  });
+  const userId = localStorage.getItem("userId"); // Get userId from localStorage
+  const [travelDate, setTravelDate] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const userId = localStorage.getItem("userId");
+  const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleBooking = async () => {
+    if (!travelDate) {
+      setError("Please select a travel date.");
+      return;
+    }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
     setLoading(true);
-    setError(null); 
+    setError("");
+
     try {
-      const response = await axios.post("http://localhost:3000/api/bookings", {
-        userId: userId, // Assuming user object has id
-        packageId: travelPackage.id,
-        travelDate: formData.travelDate,
-        numTravelers: formData.numTravelers,
-        specialRequest: formData.specialRequest,
+      const response = await axios.post("http://localhost:3000/api/booking/bookings", {
+        userId,
+        packageId,
+        travelDate,
       });
 
-      alert("Booking Successful!");
-      navigate("/confirmation"); // Redirect to a confirmation page
-    } catch (error) {
-      console.error("Error during booking:", error);
-      setError("There was an issue with your booking. Please try again.");
+      alert("Booking successful!");
+      navigate("/my-bookings");
+    } catch (err) {
+      setError(err.response?.data?.error || "Something went wrong.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg mt-10">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">
-        Booking for {travelPackage?.name}
-      </h1>
-      <div className="mb-6">
-        <p><strong>Package Name:</strong> {travelPackage?.name}</p>
-        <p><strong>Price:</strong> ${travelPackage?.price}</p>
-        <p><strong>Destination:</strong> {travelPackage?.destination}</p>
-      </div>
-
-      {/* Display error if any */}
-      {error && (
-        <div className="bg-red-500 text-white p-4 rounded-lg mb-4">
-          {error}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-lg font-semibold">Travel Date</label>
-          <input
-            type="date"
-            name="travelDate"
-            value={formData.travelDate}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-lg font-semibold">Number of Travelers</label>
-          <input
-            type="number"
-            name="numTravelers"
-            min="1"
-            value={formData.numTravelers}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-lg font-semibold">Special Requests</label>
-          <textarea
-            name="specialRequest"
-            value={formData.specialRequest}
-            onChange={handleChange}
-            className="w-full p-3 border border-gray-300 rounded-md"
-          ></textarea>
-        </div>
-
-        <div className="text-center">
-          <button
-            type="submit"
-            disabled={loading}
-            className={`${
-              loading ? "bg-gray-400" : "bg-green-600"
-            } text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300`}
-          >
-            {loading ? "Processing..." : "Confirm Booking"}
-          </button>
-        </div>
-      </form>
+    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h2 className="text-xl font-semibold mb-4">Book Your Trip</h2>
+      <label className="block mb-2">Select Travel Date:</label>
+      <input
+        type="date"
+        className="w-full p-2 border rounded mb-4"
+        value={travelDate}
+        onChange={(e) => setTravelDate(e.target.value)}
+      />
+      {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      <button
+        onClick={handleBooking}
+        className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+        disabled={loading}
+      >
+        {loading ? "Booking..." : "Create Booking"}
+      </button>
     </div>
   );
 };

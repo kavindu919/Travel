@@ -2,7 +2,7 @@ import prisma from "../lib/prismaClient.js";
 
 // Create a booking
 export const createBooking = async (req, res) => {
-  const { userId, packageId, travelDate, numTravelers, specialRequest } =
+  const { userId, packageId, travelDate} =
     req.body;
 
   try {
@@ -21,8 +21,6 @@ export const createBooking = async (req, res) => {
         userId,
         packageId,
         travelDate,
-        numTravelers,
-        specialRequest,
       },
     });
 

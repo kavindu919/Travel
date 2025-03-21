@@ -25,6 +25,7 @@ import TravelPackageView from "./pages/TravelPackageView";
 import Navbar from "./components/Navbar";
 import ProfilePage from "./pages/ProfilePage";
 import AdminBookingPage from "./pages/AdminBookingPage";
+import BookingPage from "./pages/BookingPage";
 
 // This component will conditionally render the Navbar
 const AppContent = () => {
@@ -70,6 +71,7 @@ const AppContent = () => {
         />
         <Route path="/travelPackages/:id" element={<TravelPackageDetails />} />
         <Route path="/travelPackagesview/:id" element={<TravelPackageView />} />
+        <Route path="/bookings/:id" element={<BookingPage />} />
       </Routes>
     </>
   );

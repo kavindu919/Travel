@@ -40,17 +40,8 @@ const TravelPackageDetails = () => {
     return <p className="text-center text-red-500">Travel package not found.</p>;
 
   const handleBookNow = () => {
-    if (user) {
-      // Navigate to the booking page, passing travelPackage and user data
-      navigate("/booking", {
-        state: {
-          travelPackage,
-          user, // Assuming user object is available
-        },
+      navigate(`/bookings/${id}`, {
       });
-    } else {
-      alert("Please login to make a booking.");
-    }
   };
 
   return (
